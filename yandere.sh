@@ -25,6 +25,8 @@ echo "YANDE.RE STEALER"
 echo "tags/artist:"
 read -r name
 
+echo -e "\n"
+
 echo "count:"
 read -r count
 
@@ -33,15 +35,18 @@ echo -e "\n"
 echo -e "reading source for /${GREEN}$name ..
 ${WHITE}"
 json="cat ${name}.html"
+jamet="cat links.txt"
 
 wget -O ${name}.html https://yande.re/post?tags=${name};
 
 #do
-mkdir result;
-${json} | grep img | grep -Po 'largeimg" href="\K.*?(?=")' | sed 's/\?.*//' > result/links.txt; 
-cd result;
-cat links.txt | sed "1,$count!d" > a.txt
-#wget -i links.txt
+mkdir res;
+${json} | grep img | grep -Po 'largeimg" href="\K.*?(?=")' | sed 's/\?.*//' > res/links.txt; 
+rm ${name}.html
+cd res;
+${jamet} | sed "1,$count!d" > a.txt
+wget -i a.txt
+rm a.txt links.txt
 
 
 #length
